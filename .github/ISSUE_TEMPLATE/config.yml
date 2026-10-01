@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions & ideas
+    url: https://github.com/Charannsai/leadit/discussions
+    about: Ask setup questions or share how you use Leadit
+  - name: Security vulnerability
+    url: https://github.com/Charannsai/leadit/security/advisories/new
+    about: Please report security issues privately

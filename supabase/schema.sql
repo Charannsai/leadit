@@ -1,4 +1,4 @@
--- LeadEnrich schema. Run once in Supabase → SQL Editor.
+-- Leadit schema. Run once in Supabase → SQL Editor.
 -- All objects are prefixed le_ so they can share a Supabase project with other apps.
 -- Every table has RLS on with no policies: only the server (service role key) can read/write.
 

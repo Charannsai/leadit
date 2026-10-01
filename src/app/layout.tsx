@@ -6,8 +6,8 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "LeadEnrich",
-  description: "Founder and company contact enrichment for lead lists",
+  title: "Leadit",
+  description: "Open-source lead enrichment and outreach: founders, verified emails, LinkedIn and AI-written campaigns",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

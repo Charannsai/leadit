@@ -148,7 +148,7 @@ function Sidebar({ collapsed, onToggle }: { collapsed: boolean; onToggle: () => 
         <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-accent text-white">
           <Sparkles size={14} />
         </div>
-        {!collapsed && <div className="flex-1 whitespace-nowrap text-[14px] font-semibold tracking-tight">LeadEnrich</div>}
+        {!collapsed && <div className="flex-1 whitespace-nowrap text-[14px] font-semibold tracking-tight">Leadit</div>}
         <button onClick={onToggle} className="rounded-md p-1.5 text-muted hover:bg-white hover:text-ink" title={toggleLabel} aria-label={toggleLabel}>
           {collapsed ? <PanelLeftOpen size={15} /> : <PanelLeftClose size={15} />}
         </button>

@@ -22,7 +22,7 @@ export default function Login() {
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent text-white">
             <Sparkles size={14} />
           </div>
-          <div className="text-[14px] font-semibold">LeadEnrich</div>
+          <div className="text-[14px] font-semibold">Leadit</div>
         </div>
         <input
           type="password"
