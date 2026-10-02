@@ -2,7 +2,7 @@ import { withAgent } from "@/lib/agentLog";
 import { db, must } from "@/lib/db";
 import { kickWorker } from "@/lib/kick";
 import { refreshCampaign, sentLast24h, setStatus } from "@/lib/outreach/engine";
-import { sendEmail } from "@/lib/outreach/resend";
+import { NO_SENDER, sendEmail } from "@/lib/outreach/resend";
 import type { Attachment, OutreachItem, OutreachStatus } from "@/lib/outreach/types";
 import { getSettings } from "@/lib/settings";
 
@@ -63,6 +63,7 @@ export async function POST(req: Request, { params }: Ctx) {
   if (!item.recipient || !item.subject || !item.body) return Response.json({ error: "Recipient, subject and body are required" }, { status: 400 });
 
   const settings = await getSettings(true);
+  if (!settings.outreach.fromEmail) return Response.json({ error: NO_SENDER }, { status: 400 });
   const sent = await sentLast24h();
   if (sent >= settings.outreach.dailyLimit) return Response.json({ error: `Daily limit reached (${sent}/${settings.outreach.dailyLimit} in the last 24h). Approve it instead and it goes out when there's room.` }, { status: 429 });
 

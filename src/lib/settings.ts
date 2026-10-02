@@ -47,13 +47,15 @@ export const DEFAULT_SETTINGS: Settings = {
   concurrency: 3,
   verifyEmails: true,
   guessEmails: true,
+  // No sender is built in: each install sets its own in Settings → Outreach
+  // (saved in the database). Sending is blocked until fromEmail is set.
   outreach: {
-    fromName: "Charan",
-    fromEmail: "charan@cerprise.in",
-    replyTo: "charan@cerprise.in",
-    senderTitle: "Founder",
-    company: "Cerprise",
-    signature: "Charan\nCerprise",
+    fromName: "",
+    fromEmail: "",
+    replyTo: "",
+    senderTitle: "",
+    company: "",
+    signature: "",
     dailyLimit: 50,
     gapSeconds: 90,
     linkedinDailyLimit: 20,

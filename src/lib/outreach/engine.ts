@@ -5,7 +5,7 @@ import { db, must } from "../db";
 import { getSettings } from "../settings";
 import type { Lead } from "../types";
 import { writeDraft, type Brief } from "./generate";
-import { emailEvent, sendEmail, SendError } from "./resend";
+import { emailEvent, NO_SENDER, sendEmail, SendError } from "./resend";
 import type { Attachment, Campaign, OutreachItem, OutreachStatus } from "./types";
 
 const DAY_MS = 86_400_000;
@@ -131,6 +131,11 @@ async function sendScheduled(item: OutreachItem, attachments: Attachment[], sett
     const defer = (at: number) =>
       db().from("le_outreach").update({ scheduled_at: new Date(at).toISOString(), locked_until: null, attempts: Math.max(0, item.attempts - 1) }).eq("id", item.id);
 
+    // No sender configured yet: hold the email (not a failed attempt) until one is set.
+    if (!settings.outreach.fromEmail) {
+      await db().from("le_outreach").update({ scheduled_at: new Date(Date.now() + 10 * 60_000).toISOString(), locked_until: null, attempts: Math.max(0, item.attempts - 1), error: NO_SENDER }).eq("id", item.id);
+      return;
+    }
     // Respect the daily limit even if the schedule was made before the limit changed.
     if ((await sentLast24h()) >= settings.outreach.dailyLimit) {
       const { data: oldest } = await db().from("le_outreach").select("sent_at").eq("channel", "email").gte("sent_at", new Date(Date.now() - DAY_MS).toISOString()).order("sent_at").limit(1);

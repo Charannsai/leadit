@@ -1,6 +1,8 @@
 import { db, must } from "@/lib/db";
 import { kickWorker } from "@/lib/kick";
 import { refreshCampaign, scheduleEmails, setStatus } from "@/lib/outreach/engine";
+import { NO_SENDER } from "@/lib/outreach/resend";
+import { getSettings } from "@/lib/settings";
 import { ensureWorker } from "@/lib/watchdog";
 import type { OutreachItem } from "@/lib/outreach/types";
 
@@ -67,6 +69,9 @@ export async function POST(req: Request, { params }: Ctx) {
   const items = must(await q.order("created_at")) as OutreachItem[];
 
   let result: Record<string, unknown> = { count: items.length };
+  if (action === "approve" && campaign.channel === "email" && !(await getSettings(true)).outreach.fromEmail) {
+    return Response.json({ error: NO_SENDER }, { status: 400 });
+  }
   if (action === "approve" && campaign.channel === "email") {
     result = await scheduleEmails(items.map((i) => i.id));
   } else {

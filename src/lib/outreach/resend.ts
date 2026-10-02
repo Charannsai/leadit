@@ -42,6 +42,8 @@ async function loadAttachments(list: Attachment[]) {
   );
 }
 
+export const NO_SENDER = "No sender email set. Add one in Settings → Outreach.";
+
 export class SendError extends Error {
   constructor(message: string, public permanent: boolean, public retryAfterSec = 0) {
     super(message);
@@ -54,6 +56,7 @@ export function sendEmail(opts: { to: string; subject: string; body: string; att
 }
 
 async function sendRaw(opts: { to: string; subject: string; body: string; attachments: Attachment[]; sender: OutreachSettings; idempotencyKey: string }) {
+  if (!opts.sender.fromEmail) throw new SendError(NO_SENDER, false, 600);
   const { text, html } = composeEmail(opts.body, opts.sender);
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",

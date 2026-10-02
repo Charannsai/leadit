@@ -425,14 +425,14 @@ function OutreachTab() {
         Emails go out through Resend from your verified domain. Replies land in your normal inbox (Zoho). Mark them as replied on the lead.
       </p>
       <div className="grid gap-3 rounded-xl border border-line p-4 sm:grid-cols-2">
-        <L label="From name"><input className={input} value={o.fromName} onChange={(e) => set({ fromName: e.target.value })} /></L>
-        <L label="From email" hint="Must be on a domain verified in Resend"><input className={input} value={o.fromEmail} onChange={(e) => set({ fromEmail: e.target.value })} /></L>
-        <L label="Reply-to"><input className={input} value={o.replyTo} onChange={(e) => set({ replyTo: e.target.value })} /></L>
-        <L label="Your title" hint="Used by the AI to write in your voice"><input className={input} value={o.senderTitle} onChange={(e) => set({ senderTitle: e.target.value })} /></L>
-        <L label="Your company"><input className={input} value={o.company} onChange={(e) => set({ company: e.target.value })} /></L>
+        <L label="From name"><input className={input} placeholder="Jane Doe" value={o.fromName} onChange={(e) => set({ fromName: e.target.value })} /></L>
+        <L label="From email" hint="Must be on a domain verified in Resend"><input className={input} placeholder="jane@yourcompany.com" value={o.fromEmail} onChange={(e) => set({ fromEmail: e.target.value })} /></L>
+        <L label="Reply-to"><input className={input} placeholder="Same as from email" value={o.replyTo} onChange={(e) => set({ replyTo: e.target.value })} /></L>
+        <L label="Your title" hint="Used by the AI to write in your voice"><input className={input} placeholder="Founder" value={o.senderTitle} onChange={(e) => set({ senderTitle: e.target.value })} /></L>
+        <L label="Your company"><input className={input} placeholder="Acme Inc" value={o.company} onChange={(e) => set({ company: e.target.value })} /></L>
         <div className="sm:col-span-2">
           <L label="Signature" hint="Added under every email">
-            <textarea rows={3} className="w-full resize-y rounded-lg border border-line-strong px-2.5 py-2 text-[13px] outline-none focus:border-ink" value={o.signature} onChange={(e) => set({ signature: e.target.value })} />
+            <textarea rows={3} className="w-full resize-y rounded-lg border border-line-strong px-2.5 py-2 text-[13px] outline-none focus:border-ink" placeholder={SIGNATURE_PLACEHOLDER} value={o.signature} onChange={(e) => set({ signature: e.target.value })} />
           </L>
         </div>
         <div className="sm:col-span-2">
@@ -460,3 +460,5 @@ function L({ label, hint, children }: { label: string; hint?: string; children: 
     </label>
   );
 }
+
+const SIGNATURE_PLACEHOLDER = ["Jane Doe", "Acme Inc"].join("\n");

@@ -50,7 +50,9 @@ export async function writeDraft(lead: Lead, target: Target, recipientName: stri
   const toPerson = target === "founder_email" || target === "founder_linkedin";
 
   const base = [
-    `You write outreach for ${sender.fromName} (${sender.senderTitle} at ${sender.company}).`,
+    sender.fromName
+      ? `You write outreach for ${sender.fromName}${sender.senderTitle || sender.company ? ` (${[sender.senderTitle, sender.company].filter(Boolean).join(" at ")})` : ""}.`
+      : "You write outreach on behalf of the sender.",
     "Write like a real person: specific, short, no hype, no buzzwords, no emojis, no placeholders like [Name].",
     "Use one concrete detail about the recipient's company from the context so it's clearly not a template. Never invent facts that aren't in the context.",
     brief.tone ? `Tone: ${brief.tone}.` : "",
